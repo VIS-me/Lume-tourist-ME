@@ -17,39 +17,62 @@ body {
     height: calc(var(--vh) * 100);
 }
 
-/* Splash Screen Style */
+/* --- ТВОЯ СТИЛИЗАЦИЯ SPLASH SCREEN --- */
 #splash-screen {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
     background-color: var(--tg-theme-bg-color);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 10000;
-    transition: opacity 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    transition: opacity 0.5s ease-out;
 }
 
-.lume-logo { fill: none; stroke: var(--tg-theme-button-color); stroke-width: 2.5; }
-.outer-circle { stroke-dasharray: 283; animation: rotate 2s linear infinite; transform-origin: center; }
-.star-icon { fill: var(--tg-theme-button-color); transform-origin: center; animation: pulse 1.5s ease-in-out infinite; }
-.sparkle { fill: var(--tg-theme-button-color); animation: blink 1s infinite alternate; }
-.s2 { animation-delay: 0.3s; } .s3 { animation-delay: 0.6s; }
-
-@keyframes rotate { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-@keyframes blink { from { opacity: 0.2; } to { opacity: 1; } }
-
-.loading-text {
-    margin-top: 20px; text-align: center; font-weight: 800;
-    letter-spacing: 5px; color: var(--tg-theme-button-color);
+.lume-splash-container {
+    width: 250px; height: 250px;
+    filter: drop-shadow(0 0 12px rgba(52, 213, 242, 0.4));
+    animation: lumePulseContainer 3s ease-in-out infinite;
 }
 
-/* Layout */
-#app-content { padding: 20px; padding-bottom: 80px; overflow-y: auto; height: 100%; }
+@keyframes lumePulseContainer {
+    0%, 100% { transform: scale(0.98); opacity: 0.9; }
+    50% { transform: scale(1.02); opacity: 1; }
+}
+
+.lume-circle {
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-dasharray: 240 60; 
+    stroke-dashoffset: -30;
+}
+
+.lume-star {
+    fill: #34D5F2;
+    animation: lumeStarBlink 3s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes lumeStarBlink {
+    0%, 100% { opacity: 0.2; transform: scale(0.7); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* --- КОНТЕНТ И ТУЛБАР --- */
+#app-content { 
+    padding: 20px; 
+    padding-bottom: 80px; 
+    overflow-y: auto; 
+    height: 100%; 
+}
+
 .tab-content { display: none; }
-.tab-content.active { display: block; animation: slideUp 0.3s ease; }
+.tab-content.active { display: block; animation: slideIn 0.3s ease-out; }
 
-@keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* Toolbar */
 .toolbar {
     position: fixed; bottom: 0; width: 100%; height: 65px;
     background-color: var(--tg-theme-secondary-bg-color);
@@ -64,25 +87,25 @@ body {
 }
 
 .tab-link.active { color: var(--tg-theme-button-color); }
-.icon { width: 26px; height: 26px; fill: currentColor; margin-bottom: 4px; }
 
-/* Components */
+.icon { width: 24px; height: 24px; fill: currentColor; margin-bottom: 4px; }
+
 .card {
     background: var(--tg-theme-secondary-bg-color);
-    padding: 16px; border-radius: 15px; margin-bottom: 12px;
+    padding: 16px; border-radius: 12px; margin-bottom: 12px;
 }
 
 .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .service-card {
     background: var(--tg-theme-secondary-bg-color);
-    padding: 20px; border-radius: 15px; text-align: center;
+    padding: 20px; border-radius: 12px; text-align: center;
     display: flex; flex-direction: column; font-weight: 600;
 }
-.emoji { font-size: 30px; margin-bottom: 8px; }
+.emoji { font-size: 32px; margin-bottom: 8px; }
 
 button {
     background: var(--tg-theme-button-color);
     color: var(--tg-theme-button-text-color);
     border: none; width: 100%; padding: 16px;
-    border-radius: 12px; font-weight: 700; font-size: 16px;
+    border-radius: 12px; font-weight: bold;
 }
