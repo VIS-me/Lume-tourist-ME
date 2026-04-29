@@ -7,44 +7,63 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="theme-bg-main theme-text-main font-sans min-h-screen">
 
     <div id="splash-screen">
-        <div class="loader-container">
-            <svg width="120" height="120" viewBox="0 0 100 100" class="lume-logo">
-                <circle cx="50" cy="50" r="45" class="outer-circle" />
-                <path d="M50 25 L56 40 L72 40 L60 50 L65 65 L50 55 L35 65 L40 50 L28 40 L44 40 Z" class="star-icon" />
-                <circle cx="20" cy="20" r="2" class="sparkle s1" />
-                <circle cx="85" cy="35" r="2" class="sparkle s2" />
-                <circle cx="75" cy="80" r="2" class="sparkle s3" />
-            </svg>
-            <div class="loading-text">LUME</div>
-        </div>
+      <svg viewBox="0 0 100 100" class="lume-splash-container">
+        <defs>
+          <linearGradient id="lume-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="var(--tg-theme-button-color, #339AF0)"/>
+            <stop offset="100%" stop-color="#179CDE"/>
+          </linearGradient>
+        </defs>
+
+        <circle cx="50" cy="50" r="46" class="lume-circle" stroke="url(#lume-grad)" />
+        <circle cx="50" cy="50" r="41" class="lume-circle" stroke="url(#lume-grad)" opacity="0.4" stroke-width="1"/>
+
+        <text x="50" y="56" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="18" fill="url(#lume-grad)">Lume</text>
+
+        <path d="M50 2 L51 5 L54 6 L51 7 L50 10 L49 7 L46 6 L49 5 Z" class="lume-star" />
+        
+        <circle cx="15" cy="30" r="0.6" class="lume-star" style="animation-delay: 0.5s;"/>
+        <circle cx="85" cy="45" r="0.8" class="lume-star" style="animation-delay: 1.2s;"/>
+        <circle cx="25" cy="75" r="0.5" class="lume-star" style="animation-delay: 0.8s;"/>
+        <circle cx="75" cy="20" r="0.7" class="lume-star" style="animation-delay: 2.1s;"/>
+        <circle cx="5" cy="50" r="0.5" class="lume-star" style="animation-delay: 1.5s;"/>
+        <circle cx="95" cy="50" r="0.5" class="lume-star" style="animation-delay: 0.2s;"/>
+        <circle cx="50" cy="95" r="0.5" class="lume-star" style="animation-delay: 0.9s;"/>
+        <circle cx="10" cy="10" r="0.4" class="lume-star" style="animation-delay: 2.5s;"/>
+        <circle cx="90" cy="90" r="0.4" class="lume-star" style="animation-delay: 1.8s;"/>
+        <circle cx="10" cy="90" r="0.4" class="lume-star" style="animation-delay: 0.1s;"/>
+        <circle cx="90" cy="10" r="0.4" class="lume-star" style="animation-delay: 2.9s;"/>
+        <circle cx="30" cy="5" r="0.3" class="lume-star" style="animation-delay: 1.1s;"/>
+        <circle cx="70" cy="95" r="0.3" class="lume-star" style="animation-delay: 0.6s;"/>
+        <circle cx="5" cy="20" r="0.3" class="lume-star" style="animation-delay: 1.9s;"/>
+        <circle cx="95" cy="80" r="0.3" class="lume-star" style="animation-delay: 2.2s;"/>
+        <circle cx="20" cy="95" r="0.3" class="lume-star" style="animation-delay: 0.7s;"/>
+        <circle cx="80" cy="5" r="0.3" class="lume-star" style="animation-delay: 1.4s;"/>
+      </svg>
     </div>
 
     <main id="app-content">
         <section id="home" class="tab-content active">
             <h1>Lume Info</h1>
             <div class="card">
-                <h3>Добро пожаловать</h3>
-                <p>Здесь будет актуальная информация по вашему ЖК и локации.</p>
+                <h3>Добро пожаловать в Skyline</h3>
+                <p>Ваш персональный помощник в Бечичи.</p>
             </div>
         </section>
 
         <section id="services" class="tab-content">
             <h1>Сервисы</h1>
             <div class="services-grid">
-                <div class="service-card" onclick="handleReferral('cars')">
+                <div class="service-card" onclick="handleService('cars')">
                     <span class="emoji">🚗</span>
                     <span>Аренда авто</span>
                 </div>
-                <div class="service-card" onclick="handleReferral('transfer')">
+                <div class="service-card" onclick="handleService('transfer')">
                     <span class="emoji">✈️</span>
                     <span>Трансфер</span>
-                </div>
-                <div class="service-card" onclick="handleReferral('excursions')">
-                    <span class="emoji">🏔️</span>
-                    <span>Экскурсии</span>
                 </div>
             </div>
         </section>
@@ -52,13 +71,11 @@
         <section id="profile" class="tab-content">
             <h1>Профиль</h1>
             <div class="card user-profile">
-                <div id="user-photo" class="avatar"></div>
-                <div id="user-name">Загрузка...</div>
+                <div id="user-name">Пользователь</div>
             </div>
-            <button id="support-btn">Поддержать проект</button>
+            <button onclick="Telegram.WebApp.close()">Закрыть</button>
         </section>
     </main>
-
     <nav class="toolbar">
         <div class="tab-link active" data-tab="home">
             <svg class="icon"><use xlink:href="#icon-home"></use></svg>
