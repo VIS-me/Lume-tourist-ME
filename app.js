@@ -1,27 +1,39 @@
 const tg = window.Telegram.WebApp;
-
-// 1. Инициализация
 tg.ready();
 tg.expand();
 
-// 2. Управление Splash Screen
-window.addEventListener('load', () => {
+// ТВОЯ ЛОГИКА ТАЙМИНГОВ ДЛЯ ЗАСТАВКИ
+window.lumeStartTime = Date.now();
+
+function hideLumeSplash() {
     const splash = document.getElementById('splash-screen');
-    // Имитация загрузки данных (1.8 сек для красоты анимации)
+    if (!splash) return;
+
+    const currentTime = Date.now();
+    const elapsedTime = currentTime - window.lumeStartTime;
+    const minDuration = 3000; // Минимум 3 секунды
+
+    const remainingTime = Math.max(0, minDuration - elapsedTime);
+
     setTimeout(() => {
         splash.style.opacity = '0';
-        setTimeout(() => splash.style.display = 'none', 500);
-    }, 1800);
-});
+        setTimeout(() => {
+            splash.remove();
+        }, 500); 
+    }, remainingTime);
+}
 
-// 3. Адаптация высоты под мобильные браузеры
+// Запускаем скрытие
+window.addEventListener('load', hideLumeSplash);
+
+// АДАПТИВНОСТЬ ВЫСОТЫ
 function fixVH() {
     document.documentElement.style.setProperty('--vh', ${window.innerHeight * 0.01}px);
 }
 window.addEventListener('resize', fixVH);
 fixVH();
 
-// 4. Переключение вкладок
+// ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК
 const tabs = document.querySelectorAll('.tab-link');
 const contents = document.querySelectorAll('.tab-content');
 
@@ -29,7 +41,7 @@ tabs.forEach(tab => {
     tab.addEventListener('click', () => {
         const target = tab.getAttribute('data-tab');
         
-        tg.HapticFeedback.impactOccurred('medium');
+        tg.HapticFeedback.impactOccurred('light');
 
         tabs.forEach(t => t.classList.remove('active'));
         contents.forEach(c => c.classList.remove('active'));
@@ -39,28 +51,13 @@ tabs.forEach(tab => {
     });
 });
 
-// 5. Данные пользователя
+// ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
 if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
-    const user = tg.initDataUnsafe.user;
-    document.getElementById('user-name').innerText = ${user.first_name} ${user.last_name || ''};
-    // Если есть фото профиля
-    if (user.photo_url) {
-        document.getElementById('user-photo').style.backgroundImage = url(${user.photo_url});
-    }
+    document.getElementById('user-name').innerText = tg.initDataUnsafe.user.first_name;
 }
 
-// 6. Обработка рефералок (заглушка)
-function handleReferral(type) {
+// СЕРВИСЫ
+function handleService(name) {
     tg.HapticFeedback.notificationOccurred('success');
-    tg.showConfirm(Открыть сервис ${type}?, (confirm) => {
-        if (confirm) {
-            // Здесь будет твоя ссылка из Travelpayouts
-            tg.openLink('https://google.com'); 
-        }
-    });
+    tg.showAlert(Сервис ${name} будет доступен скоро!);
 }
-
-// Слушатель смены темы
-tg.onEvent('themeChanged', () => {
-    document.body.style.backgroundColor = tg.backgroundColor;
-});
